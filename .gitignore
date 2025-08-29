@@ -17,11 +17,13 @@
 /versioned/
 Gemfile.lock
 archive.json
-draft-sliwa-stir-cert-cps-ext.xml
 package-lock.json
 report.xml
 !requirements.txt
 build.sh
+draft-sliwa-stir-cert-cps-ext.xml
+draft-sliwa-stir-cert-cps-ext.txt
+draft-sliwa-stir-cert-cps-ext.code*
 draft-sliwa-stir-cert-cps-ext-0*
 draft-sliwa-stir-cert-cps-ext-1*
 draft-sliwa-stir-cert-cps-ext-2*
