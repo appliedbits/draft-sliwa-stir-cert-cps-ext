@@ -90,13 +90,13 @@ informative:
 
 --- abstract
 
-This document specifies a non‑critical X.509 v3 certificate extension that conveys the HTTPS URI of a Call Placement Service (CPS) associated with the telephone numbers authorized in a STIR Delegate Certificate. The extension enables originators and verifiers of STIR PASSporTs to discover, with a single certificate lookup, where Out‑of‑Band (OOB) PASSporTs can be retrieved. The mechanism removes bilateral CPS provisioning, allows ecosystem‑scale discovery backed by STI Certificate Transparency (STI-CT), and is fully backward compatible with existing STIR certificates and OOB APIs.
+This document specifies a non-critical X.509 v3 certificate extension that conveys the HTTPS URI of a Call Placement Service (CPS) associated with the telephone numbers authorized in a STIR Delegate Certificate. The extension enables originators and verifiers of STIR PASSporTs to discover, with a single certificate lookup, where Out-of-Band (OOB) PASSporTs can be retrieved. The mechanism removes bilateral CPS provisioning, allows ecosystem-scale discovery backed by STI Certificate Transparency (STI-CT), and is fully backward compatible with existing STIR certificates and OOB APIs.
 
 --- middle
 
 # Introduction
 
-The STIR (Secure Telephone Identity Revisited) framework provides a means of cryptographically asserting the identity of the calling party in a telephone call by using PASSporTs carried in SIP requests, as defined in {{RFC8224}} and {{RFC8225}}. To support deployment in environments where SIP Identity headers may be removed or are not end-to-end transmittable—such as in non-IP or hybrid telephony networks—the STIR Out-of-Band (OOB) mechanism was introduced in {{RFC8816}}. In OOB scenarios, PASSporTs are published to a Call Placement Service (CPS) where they may be retrieved independently of the SIP signaling path.
+The STIR (Secure Telephone Identity Revisited) framework provides a means of cryptographically asserting the identity of the calling party in a telephone call by using PASSporTs carried in SIP requests, as defined in {{RFC8224}} and {{RFC8225}}. To support deployment in environments where SIP Identity headers may be removed or are not end-to-end transmittable, such as in non-IP or hybrid telephony networks, the STIR Out-of-Band (OOB) mechanism was introduced in {{RFC8816}}. In OOB scenarios, PASSporTs are published to a Call Placement Service (CPS) where they may be retrieved independently of the SIP signaling path.
 
 To enable discovery of the appropriate CPS for a given telephone number or SPC, this document defines a certificate extension that binds a CPS URI to the identity resources listed in the TNAuthList of the STI certificate. This CPS URI extension provides a verifiable association between a number resource and its corresponding CPS, enabling relying parties to discover CPS endpoints by observing STI Certificate Transparency (STI-CT) logs defined in {{I-D.wendt-stir-certificate-transparency}}.
 
@@ -152,8 +152,8 @@ The extension MUST be marked non-critical so that implementations that do not un
 
 ## Processing Rules
 
-- A STIR Authentication Service (AS), defined in {{RFC8224}}, that holds a Delegate Certificate containing id‑pe‑cpsURI SHOULD publish OOB PASSporTs to the indicated CPS.
-- A STIR Verification Service (VS), defined in {{RFC8224}} that receives a PASSporT signed by such a certificate MAY derive the CPS endpoint by reading the extension, or MAY query an external discovery directory that is populated by monitoring the STI‑CT logs.
+- A STIR Authentication Service (AS), defined in {{RFC8224}}, that holds a Delegate Certificate containing id-pe-cpsURI SHOULD publish OOB PASSporTs to the indicated CPS.
+- A STIR Verification Service (VS), defined in {{RFC8224}} that receives a PASSporT signed by such a certificate MAY derive the CPS endpoint by reading the extension, or MAY query an external discovery directory that is populated by monitoring the STI-CT logs.
 - If the extension and an external directory disagree, verifiers SHOULD treat the call as unverifiable unless local policy states otherwise.
 
 Relying parties SHOULD ensure that the certificate containing the CPS URI is present in a trusted Certificate Transparency log before using the URI for OOB operations.
@@ -179,14 +179,14 @@ Figure 1 shows the message flow when the extension is present:
 Figure 1
 ~~~~~~~~~~~~~
 
-1. The enterprise obtains a Delegate Certificate containing the CPS URI. The CA submits the certificate to STI‑CT.
+1. The enterprise obtains a Delegate Certificate containing the CPS URI. The CA submits the certificate to STI-CT.
 2. On each call, the AS signs a PASSporT with Delegate Certificate containing SCT.
 3. The terminating VS reads the CPS URI from the certificate and fetches the PASSporT.
 
 # Operational Considerations
 
-- Logging: CAs issuing certificates with id‑pe‑cpsURI MUST submit the certificate to STI‑CT logs.
-- Rotation: Changing a CPS hostname or path requires certificate re‑issuance. Operators SHOULD minimize TTLs on old URIs during migration.
+- Logging: CAs issuing certificates with id-pe-cpsURI MUST submit the certificate to STI-CT logs.
+- Rotation: Changing a CPS hostname or path requires certificate re-issuance. Operators SHOULD minimize TTLs on old URIs during migration.
 - Monitoring: Relying parties and CPS discovery services SHOULD monitor trusted STI-CT logs for new or updated CPS URI declarations to ensure timely access and detect misconfiguration.
 
 # Security Considerations
