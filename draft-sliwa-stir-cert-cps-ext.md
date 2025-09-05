@@ -106,7 +106,7 @@ This specification defines the syntax and semantics of the CPS URI certificate e
 
 {::boilerplate bcp14-tagged}
 
-# ## The id-pe-cpsURI Certificate Extension
+# The id-pe-cpsURI Certificate Extension
 
 This {{X.509}} extension is non-critical, applicable only to end-entity certificates, and defined with ASN.1 {{X.680}} {{X.681}} {{X.682}} {{X.683}} later in this section.
 
@@ -144,7 +144,7 @@ Note: The numeric assignment TBD is temporary. IANA will allocate a permanent ar
 The IA5String value MUST be an absolute URI {{RFC3986}} that:
 
 - Uses the "https" scheme.
-- Identifies the root of the CPS REST interface (e.g., "https://cps.example.net/oob/v1").
+- Identifies the root of the CPS HTTPS API interface (e.g., "https://cps.example.net/oob/v1").
 
 ## Criticality
 
@@ -199,13 +199,12 @@ The CPS URI certificate extension introduces a mechanism for associating telepho
 - Log Availability and Monitoring: Relying parties that depend on CT log monitoring for CPS discovery SHOULD monitor multiple trusted logs to ensure timely detection of CPS declarations and prevent omission attacks.
 - Information Exposure: The publication of CPS URIs in publicly logged certificates may reveal deployment metadata. This exposure is consistent with existing STIR delegate certificate practices and does not introduce additional privacy risk beyond what is already present in TNAuthList usage.
 
-
 # IANA Considerations
 
 IANA is requested to assign a new object identifier (OID) for the CPS URI certificate extension in the "PKIX Extension Registry" as follows:
 
 - Name: id-pe-cpsURI
-- OID: [to be assigned]
+- OID: to be assigned
 - Description: Certificate extension for specifying a Call Placement Service (CPS) URI for STIR Out-of-Band PASSporTs
 - Reference: This document
 
