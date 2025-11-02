@@ -6,7 +6,7 @@ title: "Call Placement Service (CPS) URI Certificate Extension for STI Certifica
 abbrev: "CPS URI Certificate Extension"
 category: std
 
-docname: draft-sliwa-stir-cert-cps-ext-00
+docname: draft-sliwa-stir-cert-cps-ext-01
 submissiontype: IETF  # also: "independent", "editorial", "IAB", or "IRTF"
 number:
 date:
@@ -106,45 +106,47 @@ This specification defines the syntax and semantics of the CPS URI certificate e
 
 {::boilerplate bcp14-tagged}
 
-# The id-pe-cpsURI Certificate Extension
+# The id-pe-oobURI Certificate Extension
 
 This {{X.509}} extension is non-critical, applicable only to end-entity certificates, and defined with ASN.1 {{X.680}} {{X.681}} {{X.682}} {{X.683}} later in this section.
 
-This extension is intended for use in end-entity STI certificates {{RFC8226}} and delegate certificates {{RFC9060}} that include TNAuthList values authorizing the use of specific telephone numbers or Service Provider Codes (SPCs). The CPS URI extension provides a means for the certificate holder to declare the HTTPS endpoint of a Call Placement Service (CPS) defined in {{RFC8816}} that can be used to publish or retrieve PASSporTs for the covered resources.
+This extension is intended for use in end-entity STI certificates {{RFC8226}} and delegate certificates {{RFC9060}} that include TNAuthList values authorizing the use of specific telephone numbers or Service Provider Codes (SPCs). The OOB URI extension provides a means for the certificate holder to declare the HTTPS endpoint of a Call Placement Service (CPS) defined in {{RFC8816}} that can be used to publish or retrieve PASSporTs for the covered resources.
 
 The presence of this extension allows relying parties to discover the CPS associated with a given telephone number without relying on static configuration or bilateral agreements. This facilitates scalable and verifiable Out-of-Band PASSporT delivery as defined in {{RFC8816}}, using information already published in publicly logged STI certificates.
 
-The extension is encoded as an IA5String containing an absolute HTTPS URI and is identified by an object identifier (OID) assigned in the PKIX id-pe arc. Additional details about the encoding, semantics, and validation rules for the CPS URI are defined in the sections below.
+The extension is encoded as a sequence of IA5Strings containing absolute HTTPS URIs and is identified by an object identifier (OID) assigned in the PKIX id-pe arc. Additional details about the encoding, semantics, and validation rules for the OOB URI list are defined in the sections below.
 
 ## ASN.1 Module Syntax
 
 The extension ASN.1 module is defined as follows:
 
 ~~~~~~~~~~~~~
-CPS-CERT-EXTENSION DEFINITIONS EXPLICIT TAGS ::=
+OOB-CERT-EXTENSION DEFINITIONS EXPLICIT TAGS ::=
 BEGIN
 
 id-pe OBJECT IDENTIFIER ::=
   { iso(1) identified-organization(3) dod(6) internet(1)
     security(5) mechanisms(5) pkix(7) 1 }
 
-id-pe-cpsURI OBJECT IDENTIFIER ::= { id-pe TBD }
+id-pe-oobURI OBJECT IDENTIFIER ::= { id-pe TBD }
 
-CPSURI ::= IA5String
+OOBURIs ::= SEQUENCE SIZE (1..MAX) OF IA5String
 
 END
 ~~~~~~~~~~~~~
 
-Certificates containing a CPSURI that is not an absolute HTTPS URI as defined in {{RFC3986}} MUST be considered invalid by relying parties.
+Certificates containing a OOBURI that is not an absolute HTTPS URI as defined in {{RFC3986}} MUST be considered invalid by relying parties.
 
 Note: The numeric assignment TBD is temporary. IANA will allocate a permanent arc under "PKIX SubjectPublicKeyInfo Certificate Extensions" during RFC publication.
 
 ## Extension Semantics
 
-The IA5String value MUST be an absolute URI {{RFC3986}} that:
+Each IA5String value in the sequence MUST be an absolute URI {{RFC3986}} that:
 
 - Uses the "https" scheme.
 - Identifies the root of the CPS HTTPS API interface (e.g., "https://cps.example.net/oob/v1").
+
+The sequence MUST contain at least one URI. Producers MAY include multiple URIs to provide resiliency or geographic locality information.
 
 ## Criticality
 
@@ -203,7 +205,7 @@ The CPS URI certificate extension introduces a mechanism for associating telepho
 
 IANA is requested to assign a new object identifier (OID) for the CPS URI certificate extension in the "PKIX Extension Registry" as follows:
 
-- Name: id-pe-cpsURI
+- Name: id-pe-oobURI
 - OID: to be assigned
 - Description: Certificate extension for specifying a Call Placement Service (CPS) URI for STIR Out-of-Band PASSporTs
 - Reference: This document
