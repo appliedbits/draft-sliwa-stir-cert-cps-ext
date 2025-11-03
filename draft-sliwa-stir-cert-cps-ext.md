@@ -28,7 +28,7 @@ venue:
 
 author:
  -
-    fullname: Rob Sliwa
+    fullname: Rob &#x015A;liwa
     organization: Somos Inc.
     email: robjsliwa@gmail.com
  -
@@ -89,9 +89,7 @@ normative:
 informative:
 
 --- abstract
-
 This document specifies a non-critical X.509 v3 certificate extension that conveys the HTTPS URI of a Call Placement Service (CPS) associated with the telephone numbers authorized in a STIR Delegate Certificate. The extension enables originators and verifiers of STIR PASSporTs to discover, with a single certificate lookup, where Out-of-Band (OOB) PASSporTs can be retrieved. The mechanism removes bilateral CPS provisioning, allows ecosystem-scale discovery backed by STI Certificate Transparency (STI-CT), and is fully backward compatible with existing STIR certificates and OOB APIs.
-
 --- middle
 
 # Introduction
